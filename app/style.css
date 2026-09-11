@@ -1,0 +1,8 @@
+#trade-panel input {
+  max-width: 200px;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+}

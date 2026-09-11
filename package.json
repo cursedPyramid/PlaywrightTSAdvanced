@@ -1,0 +1,26 @@
+{
+  "name": "PlaywrightTSAdvanced",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "npx playwright test",
+    "smoke": "npx playwright test --grep @smoke",
+    "codegen": "npx playwright codegen",
+    "uimode": "npx playwright test --ui"
+  },
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.13",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^25.9.5",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^2.23.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  }
+}
