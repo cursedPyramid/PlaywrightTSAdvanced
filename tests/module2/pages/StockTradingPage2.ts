@@ -2,6 +2,7 @@
 import type { Locator, Page } from '@playwright/test';
 import type { Order } from './types/Order.js';
 
+// Level 2 - wrap the locator + action, function is typically a verb
 // A second Page Object design used to demonstrate moving more interaction into the Page Object itself.
 export class StockTradingPage2 {
     readonly page: Page;
@@ -15,7 +16,7 @@ export class StockTradingPage2 {
     }
 
     /* ========= Left column ========= */
-    // Combine locating and clicking into one reusable Page Object action.
+    // Combine locating and clicking into one reusable Page Object action. The action is now at the end and the locator removed. Note the async and awaits.
     async selectTicker(ticker: string) {
         await this.page
             .getByTestId('stock-list')

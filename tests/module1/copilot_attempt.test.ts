@@ -57,6 +57,15 @@ test('Buy and sell 1 stock - cash and portfolio are restored', async ({ page }) 
  * Or see app/index.html file in the project
 */
 
+
+/**
+ * 3 things to make AI output useful
+ * 
+ * 1) A high quality LLM
+ * 2) A well structured prompt (more instructions and constraints must be defined for a wide range of scenarios)
+ * 3) A high-quality code base (serves as a point of reference for AI)
+ */
+
 test('Same scenario, but with POM', async ({ page }) => {
 	const stockTradingPage = new StockTradingPage(page);
 

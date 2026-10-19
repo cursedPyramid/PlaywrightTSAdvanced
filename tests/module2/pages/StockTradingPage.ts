@@ -2,14 +2,15 @@
 import type { Locator, Page } from '@playwright/test';
 import { NavigationSection } from './NavigationSection.js';
 
-// Encapsulate locators and UI behaviour for the trading page so tests can describe intent rather than implementation details.
+// Level 1 - wrap the locator, function is typically a noun
+// Create the class and export it so that it can be imported later in the test file.
 export class StockTradingPage {
-    // Keep a reference to the Playwright Page while preventing the property from being reassigned.
+    // Keep a reference to Playwright's native Page fixture while preventing the property from being reassigned. Fixture is imported above.
     readonly page: Page;
-    // Compose the page object with a reusable navigation section.
+    // Compose the page object with a reusable navigation section imported from NavigationSection.ts.
     readonly nav: NavigationSection;
 
-    // Receive the existing Playwright page fixture and use it throughout this Page Object.
+    // Receive the existing Playwright page fixture and use it throughout this Page Object and now it can be used inside the class to locate elements..
     constructor(page: Page) {
         this.page = page;
         this.nav = new NavigationSection(page);

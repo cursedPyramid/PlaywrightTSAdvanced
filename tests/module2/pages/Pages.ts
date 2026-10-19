@@ -1,3 +1,4 @@
+// This is a page factory to aid autocomplete so that it presents pages.
 import type { Page } from '@playwright/test';
 import { StockTradingPage } from './StockTradingPage.js';
 import { AnalyticsPage } from './AnalyticsPage.js';

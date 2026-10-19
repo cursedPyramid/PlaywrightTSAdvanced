@@ -1,5 +1,5 @@
 // Import the Playwright test runner and its auto-retrying assertion API.
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 // not a real test - just a collection of fundamental Playwright capabilities
 // This is deliberately skipped: it is a reference list of Playwright capabilities rather than an executable test.
@@ -29,7 +29,7 @@ test.skip('Prerequisite knowledge for the advanced course', async ({ page, brows
   // + upload / download files
   // handle dialogs (popups)
 
-  // Use Playwright’s APIRequest fixture to make an HTTP request without driving the browser UI.
+  // Use Playwright's APIRequest fixture to make an HTTP request without driving the browser UI.
   await request.get('url');
 
   // assertions

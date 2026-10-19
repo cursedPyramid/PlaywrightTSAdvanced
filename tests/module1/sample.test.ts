@@ -1,5 +1,5 @@
 // Import the Playwright test runner and its auto-retrying assertion API.
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 // Group related tests together; hooks, configuration and tags can also be scoped at this level.
 test.describe('Sample tests', () => {
@@ -18,7 +18,7 @@ test.describe('Sample tests', () => {
             .filter({ hasText: 'MSFT' })
             .click()
 
-        // Capture the displayed market price so the test can use the application’s current value rather than hard-coding it.
+        // Capture the displayed market price so the test can use the applicationï¿½s current value rather than hard-coding it.
         const marketPrice = Number(await page.getByTestId('stock-price').textContent());
 
         // fill price and qty

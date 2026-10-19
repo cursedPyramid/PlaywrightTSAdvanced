@@ -29,7 +29,7 @@ test('POM Level 1 Demo - Attempt to buy more than the available cash balance', a
     await stockTradingPage.ticker('MSFT').click();
 
     // Get market price
-    // Capture the displayed market price so the test can use the application’s current value rather than hard-coding it.
+    // Capture the displayed market price so the test can use the application's current value rather than hard-coding it.
     const marketPrice = Number(await stockTradingPage.currentPrice().textContent());
 
     // Attempt to buy 1000 shares (more than available cash)
