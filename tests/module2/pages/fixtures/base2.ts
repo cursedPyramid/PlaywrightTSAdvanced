@@ -26,7 +26,7 @@ export const test = base.extend<PageFixtures>({
 
 // no failJSError or other extra fixtures
 
-// Build a stricter variant of the custom test with additional page monitoring.
+// Extend the already extended test and immediately save it to an exportable variable.
 export const strictTest = test.extend({
 
     page: async({ page }, use) => {

@@ -41,7 +41,7 @@ export default defineConfig<ConfigOptions>({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'], 
         // Enable the custom fixture option that can fail a test run when the page raises JavaScript errors.
-        failOnJSError: true,
+        failOnJSError: true, // Toggling feature flags should be done inside config files and not code
       },
       
     }

@@ -1,6 +1,7 @@
-// import { test } from '@playwright/test';
+// import { test } from '@playwright/test'; // superseded by the base file
+// import { expect } from '@playwright/test'; // source 2; not needed because export is exported from base
 // Import the Playwright test runner and its auto-retrying assertion API.
-import { test, expect } from '../module2/pages/fixtures/base.js';
+import { expect, test } from '../module2/pages/fixtures/base.js'; // source 1; single source of truth' the base file
 
 // Define a Playwright test. The async callback receives Playwright fixtures such as `page`.
 // Demonstrate several built-in Playwright fixtures: `page`, `browser` and `request`.
@@ -26,7 +27,7 @@ test('Custom Fixture Page', async ({ stockPage }) => {
 
     await stockPage.ticker("MSFT").click();
 
-    // Capture the displayed market price so the test can use the application’s current value rather than hard-coding it.
+    // Capture the displayed market price so the test can use the application's current value rather than hard-coding it.
     const marketPrice = Number(await stockPage.currentPrice().textContent());
 
     await stockPage.limitPriceInput().fill(marketPrice.toString());
@@ -39,7 +40,7 @@ test('Custom Fixture Page', async ({ stockPage }) => {
 
 });
 
-// Demonstrate that a custom fixture setup can override or wrap Playwright’s built-in `page` fixture.
+// Demonstrate that a custom fixture setup can override or wrap Playwright's built-in `page` fixture.
 test("Override existing page fixture", async ({ stockPage }) => {
 
     await stockPage.goto();

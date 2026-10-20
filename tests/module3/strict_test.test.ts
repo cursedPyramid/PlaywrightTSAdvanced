@@ -4,7 +4,7 @@ import { strictTest, test } from "../module2/pages/fixtures/base2.js";
 // Group related tests together; hooks, configuration and tags can also be scoped at this level.
 test.describe('two tests', () => {
 
-    // Define a Playwright test. The async callback receives Playwright fixtures such as `page`.
+    // Does not use the stricter custom test object, and so will pass even when there may be JavaScript and network errors.
     test('Test that focuses on core functionality', async ({ stockPage }) => {
 
         await stockPage.goto();

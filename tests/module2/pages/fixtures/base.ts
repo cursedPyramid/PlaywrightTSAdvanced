@@ -1,9 +1,9 @@
 // Import the base Playwright test object so it can be extended with custom fixtures.
-import { test as base, expect } from '@playwright/test';
+import { expect, test as base } from '@playwright/test';
 import { StockTradingPage } from '../StockTradingPage.js';
 import { AnalyticsPage } from '../AnalyticsPage.js';
 
-// Describe the custom fixtures that tests can request by destructuring them from the test callback.
+// Create a custom fixtures type and inside enumerate all the page classes. There are two, so they are defined here. And the types are declared explicitly.
 export type PageFixtures = {
     stockPage: StockTradingPage,
     analyticsPage: AnalyticsPage
@@ -16,20 +16,22 @@ export type ConfigOptions = {
     failOnNetworkError: boolean;
 }
 
-// Create a custom Playwright test object by extending the built-in fixtures.
+// Extend base with fixtures that is saved back to test and exported.
 export const test = base.extend<PageFixtures & ConfigOptions>({
 
-    // Provide a ready-to-use StockTradingPage Page Object to tests that request `stockPage`.
+    // For every custom page class, we must write; custom page name (stockPage) that takes the native page, initializes the custom page, and then the most important part, use the page.
     stockPage: async ({ page }, use) => {
         const stockPage = new StockTradingPage(page);
 
-        // place for global hooks (?)
+        // When Playwright tests are run, at some point, the runtime reaches await use, and this is where the control flow switches to the test and the test itself runs.
+        // This means that the space before and after can be used to do something such as a place for global hooks, such as set up and tear down before every custom test that uses custom pages.
         console.log("Do stuff before");
-        // Hand the prepared fixture value to the test; code after `use` runs as teardown.
+        // The most important part, use the page.
         await use(stockPage);
         console.log("Do stuff after");
     },
 
+    // Repeat the process for other pages
     analyticsPage: async ({ page }, use) => {
         const analyticsPage = new AnalyticsPage(page);
 
@@ -37,15 +39,16 @@ export const test = base.extend<PageFixtures & ConfigOptions>({
     },
 
     // Define a custom boolean fixture option controlling whether captured page errors should fail the test.
-    failOnJSError: [true, {}],
+    failOnJSError: [true, {}], //  Fail the test if we catch any JavaScript errors in the console. Set to false to make inactive.
     failOnNetworkError: [true, { 
-        option : true, // override via config
-        timeout: 5000, // for slow hooks
-        title: "as seen in reports and elsewhere",
-        box: "self",
+        option : true, // Override via playwright.config.ts
+        timeout: 5000, //  If a fixture is very slow and the build is not to hang indefinitely, set the limit in milliseconds.
+        title: "as seen in reports and elsewhere", //  Gives a fixture a custom title to be printed in test reports and elsewhere.
+        box: "self", // Can be set to boolean or string self.
     }],
 
-    // Override the built-in `page` fixture so additional monitoring can be attached while keeping the normal Playwright page.
+    // Override the native `page` fixture so additional monitoring can be attached while keeping the normal Playwright page.
+    // Note that the native page fixture will run before the custom fixtures.
     page: async ({ page, failOnJSError, failOnNetworkError }, use) => {
 
         // Collect browser-level JavaScript errors so they can be checked after the test has finished.
@@ -64,7 +67,7 @@ export const test = base.extend<PageFixtures & ConfigOptions>({
             });
         }
 
-        // Run the actual test with the instrumented page fixture.
+        // The only mandatory line is this one. Run the actual test with the page fixture.
         await use(page);
 
         if(failOnJSError) {
@@ -75,4 +78,5 @@ export const test = base.extend<PageFixtures & ConfigOptions>({
 
 });
 
+// expect function is exported from this file as well because from now on, it must be referenced in all tests, so both pages and assertions can be used.
 export { expect } from '@playwright/test';
