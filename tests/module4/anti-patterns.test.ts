@@ -1,5 +1,5 @@
 // Import the Playwright test runner and its auto-retrying assertion API.
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 // Define a Playwright test. The async callback receives Playwright fixtures such as `page`.
 test('...', async ({ page }) => {
@@ -7,9 +7,9 @@ test('...', async ({ page }) => {
     // missed await
     await test.step('Do things', async () => {
 
-        const locator = page.getByTestId('some-id'); // Await is useless here; because functionality hasn't been loaded yet
+        const locator = page.getByTestId('some-id'); // Await is useless at this point; Playwright doesn't dig into the web page, and it doesn't try to find it.
 
-        // Forgetten awaits. All actions return a Promise that must be awaited
+        // Forgetten awaits. All actions such as click, select, and such, they all return a promise that must be awaited.
         // Biome not catching non-awaited actions here
         await page.goto('');
         await page.getByTestId('some-id').click();
@@ -48,17 +48,29 @@ test('Poor waiting example', async ({ page }) => {
 
 test('toPass for hydration, toPoll for backend retries', async ({ page }) => {
 
+    // This for loop is unnecessary due to Playwright's await expect().toPass();
+    for (let attempt = 1; attempt <=3; attempt++) {
+        try {
+            await page.getByRole('button', { name: 'Buy' }).click();
+            break;
+        } catch {
+            if (attempt===3) throw new Error('Failed after 3 retries');
+        }
+    };
+
     const retry = {
         slow: { intervals: [1_000, 2_000, 10_000], timeout: 60_000 },
         fast: { intervals: [500, 1_000], timeout: 10_000 },
     };
 
+    // A block with configuration, that is now reusable constant and passed in
     const toPassConfig = {
         intervals: [1_000, 2_000, 10_000],
         timeout: 60_000
     };
 
-    // exception, not the norm
+    // exception, not the norm; poor hydration should be fixed wherever possible, not covered up by retry mechanisms in tests
+    // expect is normally used with one value, typically a locator, but it can also accept a callback function, which is the flaky block that we want to retry
     await expect(async () => {
         // problematic action + expect
         await page.getByTestId('id1').click();
