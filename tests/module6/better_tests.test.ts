@@ -7,14 +7,17 @@ import { test } from '@playwright/test';
  * Many contributors -> inconsistent style
  *
  * Template!
+ * 
+ * Suggestion: {most important aspect} - {expected outcome}
  *
- * Buy one stock    - cash and portfolio updated
- * Buy two stocks   - cash and portfolio updated
+ * Examples:
+ * Buy one stock - cash and portfolio updated
+ * Buy two stocks - cash and portfolio updated
  *
- * Sell one stock   - cash and portfolio updated
- * Sell all stocks  - cash updated, portfolio empty
+ * Sell one stock - cash and portfolio updated
+ * Sell all stocks - cash updated, portfolio empty
  *
- * Sell stock not owned                  - rejected, cash and portfolio unchanged
+ * Sell stock not owned - rejected, cash and portfolio unchanged
  * Sell stock owned, but qty > owned qty - rejected, cash and portfolio unchanged
  *
  * Offline:
@@ -22,7 +25,8 @@ import { test } from '@playwright/test';
  *
  */
 
-// Group related tests together; hooks, configuration and tags can also be scoped at this level.
+// Group related tests together inside a test.describe for at least two reasons. The group title allows extra context for humans and AI that applies to all tests in that group.
+// And second, the Playwright plugin can run the entire group.
 test.describe("Group description", () => {
 
     // Define a Playwright test. The async callback receives Playwright fixtures such as `page`.

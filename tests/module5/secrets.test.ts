@@ -1,4 +1,5 @@
 import { test } from '@playwright/test';
+// Worth spending time reading the Playwright test documentation: https://playwright.dev/docs/auth and https://playwright.dev/docs/network#http-authentication
 // Load dotenvx configuration so environment variables can be supplied without hard-coding secrets in the test.
 import '@dotenvx/dotenvx/config';
 

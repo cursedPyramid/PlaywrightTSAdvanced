@@ -6,12 +6,12 @@ import { test } from '@playwright/test';
  *
  * test-data/               - data factories, reusable objects, CSV and JSON files
  *
- * pages/
+ * pages/                   - for the Page Object Model, page classes and locators
  *      sections/
  *      fixtures/
  *      types/ or domain_objects/   - order, cart, item, patient record
  *
- * tests/
+ * tests/                   - test files, grouped by business domain or flow
  *      trading/
  *      analytics/
  *      reporting/
@@ -29,6 +29,7 @@ import { test } from '@playwright/test';
 
 // Group related tests together; hooks, configuration and tags can also be scoped at this level.
 // Tags can be applied at group level so every test in the group inherits the tag.
+// When using tags, add commands to your scripts in package.json to run tests with specific tags, e.g. "smoke": "npx playwright test --grep @smoke" will be executed with `npm run smoke`.
 test.describe("Group description", { tag: "@group-tag" }, () => {
 
 	// `test(title, body)`
